@@ -1,5 +1,7 @@
 <?php
 
+// Lib By Léon ==> Read the README.MD for the documentation
+
 class DB
 {
   private $path = '';
