@@ -1,41 +1,41 @@
 # SIMPLE JSON DB
 
-A simple json db class, very useful to run some tests or to develop very basic apps for personal use on the fly. Also, it's very easy to configure.
+Une classe json db simple, très utile pour exécuter des tests ou pour développer des applications très basiques pour un usage personnel à la volée. De plus, il est très facile à configurer.
 
-## INSTALLING
+## INSTALLATION
 
-In order to install the db, you need to download `json-db.class.php` and put it wherever you want.
+Pour installer la base de données, vous devez télécharger `Database.php` et la placer où vous le souhaitez.
 
 ```php
-    //Require the file in your script
-    require("../your-path/library/json-db.class.php");
+    //Exiger le fichier dans votre script
+    require("../ton-dossier/libs/Database.php");
 ```
 
-## INSTANTIATE THE DB
+## INITIALISER LA DB
 
 In order to connect to a json db or to create one, you need to run the following code:
 
 ```php
-    // Instantiate a db with the default name (db.json)
+    // initialiser une base de données avec le nom par défaut (db.json)
     $database = new DB();
 ```
 
-This will assign to the variable `$database` the database 'db', as you haven't provided a custom db.
+Cela affectera à la variable `$ database` la base de données 'db', car vous n'avez pas fourni de base de données personnalisée.
 
 ```php
-    // A db named custom.json
+    // Un db nommé custom.json
     $database2 = new DB("custom");
 ```
 
-This one, though, will assign to the variable `$database2` the database 'custom', provided as a paramether when you instantiate the class.
-Please note that if the custom database doesn't exists when you instantiate it, an empty db will bee created.
+Celui-ci, cependant, affectera à la variable «$ database2» la base de données «custom», fournie en tant que paramètre lorsque vous instanciez la classe.
+Veuillez noter que si la base de données personnalisée n'existe pas lorsque vous l'instanciez, une base de données vide sera créée.
 
-## INSERT
+## INSÉRER
 
-In order to insert a new field inside the selected db, you need to run the following code:
+Afin d'insérer un nouveau champ dans la base de données sélectionnée, vous devez exécuter le code suivant:
 
 ```php
-    //Add a new field to the db, passing the data (an array) and the key (in this case, the id, but you can choose a custom one)
+    //Ajoutez un nouveau champ à la base de données, en passant les données (un tableau) et la clé (dans ce cas, l'id, mais vous pouvez en choisir un personnalisé)
     $new_data = [
         "id" => 1,
         "name" => "John",
@@ -44,9 +44,9 @@ In order to insert a new field inside the selected db, you need to run the follo
      $database->insert($new_data, $new_data['id']);
 ```
 
-## GET SINGLE
+## Résultat Unique
 
-In case you need a single result based on the key, you need to run the following code:
+Si vous avez besoin d'un résultat unique basé sur la clé, vous devez exécuter le code suivant:
 
 ```php
     $result = $database->getSingle("1");
@@ -54,7 +54,7 @@ In case you need a single result based on the key, you need to run the following
     print_r($result);
 ```
 
-This will return a Json object, like this:
+Cela retournera un objet Json, comme ceci:
 
 ```json
 {
@@ -66,10 +66,10 @@ This will return a Json object, like this:
 }
 ```
 
-## GET LIST
+## Résultat Multiple
 
-You might also decide to select more than one result, based on a query.
-The query is an array of keys with the relative values, something like this:
+Vous pouvez également décider de sélectionner plusieurs résultats, en fonction d'une requête.
+La requête est un tableau de clés avec les valeurs relatives, quelque chose comme ceci:
 
 ```php
     $query = [
@@ -78,17 +78,18 @@ The query is an array of keys with the relative values, something like this:
     ];
 ```
 
-With this query, I'm trying to select all the results whose name is 'John' and whose surname is 'Doe'.
-Now we need to run that query and get our results:
+Avec cette requête, j'essaie de sélectionner tous les résultats dont le nom est «John» et dont le nom de famille est «Doe».
+Maintenant, nous devons exécuter cette requête et obtenir nos résultats:
 
 ```php
-    //Show several results based on array query (in this case, all the fields with name: "John" and surname: "Doe")
+    //Afficher plusieurs résultats basés sur la requête du tableau (dans ce cas, tous les champs avec le nom: "John" et le nom de famille: "Doe")
+    
     $result2 = $database3->getList($query);
 
     print_r($result2);
 ```
 
-This will return a Json object, like this:
+Cela retournera un objet Json, comme ceci:
 
 ```json
 {
@@ -109,42 +110,37 @@ This will return a Json object, like this:
 }
 ```
 
-This is just a test whith a database I've populated with several random results!
+Ce n'est qu'un test avec une base de données que j'ai remplie avec plusieurs résultats aléatoires!
 
-### SORT
+### Trier
 
-You can also sort your result by passing another param to the `getList` function, as it follows:
+Vous pouvez également trier votre résultat en passant un autre paramètre à la fonction `getList`, comme suit:
 
 ```php
-    //Order the provided param
+    //Commandez le param fourni
     $result2 = $database3->getList($query, ["on" => "name", "order" => "ASC"]);
 ```
 
-In the previous example, together with the function we have passed information about the way we want the result to be sorted:
+Dans l'exemple précédent, avec la fonction, nous avons transmis des informations sur la façon dont nous voulons que le résultat soit trié:
 
-- `on` is the key we want to consider
-- `order` is the order, and it can be ASC or DESC
+- `on` est la clé que nous voulons considérer
+- `order` est l'ordre, et il peut être ASC ou DESC
 
-## DELETE
+## Supprimer
 
-You can easily delete a result by running the function `delete`, as it follows:
+Vous pouvez facilement supprimer un résultat en exécutant la fonction `delete`, comme suit:
 
 ```php
-    //Remove the row from the db based on the key you pass
+    //Supprimez la ligne de la base de données en fonction de la clé que vous passez
     $database3->delete("my-key");
 ```
 
-## CLEAR
+## Nettoyer
 
-You can easily clear the selected database by running the function `clear`, as it follows:
+Vous pouvez facilement effacer la base de données sélectionnée en exécutant la fonction `clear`, comme suit:
 
 ```php
-    //Clear the db
+    //Effacer la base de données
     $database3->clear();
 ```
 
-### EXAMPLE
-
-You can have a look at the example (index.php) for more information about how to use Simple JSON DB.
-
-Please, enjoy this class, and don't hesitate to ask, if you have any questions.
